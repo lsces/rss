@@ -1,5 +1,7 @@
 <?php
 
+use Bitweaver\KernelTools;
+
 // $Header$
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -8,64 +10,64 @@
 
 foreach( $gBitSystem->mPackages as $pkg => $pkgInfo ) {
 	if( is_file( $pkgInfo['path'].$pkg.'_rss.php' ) ) {
-		$formRSSFeeds[$pkg.'_rss'] = array(
+		$formRSSFeeds["{$pkg}_rss"] = [
 			'label' => $pkg,
-		);
+		];
 	}
 }
 $gBitSmarty->assign( "formRSSFeeds", $formRSSFeeds );
 
-$formRSSSettings = array(
-	'rssfeed_language' => array(
+$formRSSSettings = [
+	'rssfeed_language'  => [
 		'label' => 'Language',
-	),
-	'rssfeed_creator' => array(
+	],
+	'rssfeed_creator'   => [
 		'label' => 'Creator',
-	),
-	'rssfeed_editor' => array(
+	],
+	'rssfeed_editor'    => [
 		'label' => 'Editor',
-		'note' => 'Email address for person responsible for editorial content. For RDF 2.0',
-	),
-	'rssfeed_webmaster' => array(
+		'note'  => 'Email address for person responsible for editorial content. For RDF 2.0',
+	],
+	'rssfeed_webmaster' => [
 		'label' => 'Webmaster',
-		'note' => 'Email address for person responsible for technical issues relating to channel. For RDF 2.0',
-	),
-	'rssfeed_image_url' => array(
+		'note'  => 'Email address for person responsible for technical issues relating to channel. For RDF 2.0',
+	],
+	'rssfeed_image_url' => [
 		'label' => 'Image URL',
-		'note' => 'Enter the full URL to an image that you want to associate with your RSS channels',
-	),
-	'rssfeed_css_url' => array(
+		'note'  => 'Enter the full URL to an image that you want to associate with your RSS channels',
+	],
+	'rssfeed_css_url'   => [
 		'label' => 'CSS File URL',
-		'note' => 'Enter the full URL to a CSS file you want to use to style your RSS Feeds.',
-	),
-	'rssfeed_truncate' => array(
+		'note'  => 'Enter the full URL to a CSS file you want to use to style your RSS Feeds.',
+	],
+	'rssfeed_truncate'  => [
 		'label' => 'Truncate RSS feed',
-		'note' => 'Enter the number of characters you want to feed per item in the rss feeds. Default is 5000 characters.',
-	),
-);
+		'note'  => 'Enter the number of characters you want to feed per item in the rss feeds. Default is 5000 characters.',
+	],
+];
 $gBitSmarty->assign( "formRSSSettings", $formRSSSettings );
 
-$formRSSOptions = array(
-	'rssfeed_httpauth' => array(
+$formRSSOptions = [
+	'rssfeed_httpauth' => [
 		'label' => 'Enable HTTP Authentication',
-		'note' => 'Use HTTP Authentication with SSL to enable Registered Users to gain access to Private Content Feeds.',
-	),
-);
+		'note'  => 'Use HTTP Authentication with SSL to enable Registered Users to gain access to Private Content Feeds.',
+	],
+];
 $gBitSmarty->assign( "formRSSOptions", $formRSSOptions );
 
-$cacheTimes = array(
-	0      => tra( "(no cache)" ),
-	60     => "1 ".tra( "minute" ),
-	300    => "5 ".tra( "minutes" ),
-	600    => "10 ".tra( "minutes" ),
-	1800   => "30 ".tra( "minutes" ),
-	3600   => "1 ".tra( "hour" ),
-	7200   => "2 ".tra( "hours" ),
-	14400  => "4 ".tra( "hours" ),
-);
+$cacheTimes = [
+	0     => KernelTools::tra( "(no cache)" ),
+	60    => "1 " . KernelTools::tra( "minute" ),
+	300   => "5 " . KernelTools::tra( "minutes" ),
+	600   => "10 " . KernelTools::tra( "minutes" ),
+	1800  => "30 " . KernelTools::tra( "minutes" ),
+	3600  => "1 " . KernelTools::tra( "hour" ),
+	7200  => "2 " . KernelTools::tra( "hours" ),
+	14400 => "4 " . KernelTools::tra( "hours" ),
+];
 $gBitSmarty->assign( "cacheTimes", $cacheTimes );
 
-$feedTypes = array(
+$feedTypes = [
 	0 => "RSS 0.91",
 	1 => "RSS 1.0",
 	2 => "RSS 2.0",
@@ -76,7 +78,7 @@ $feedTypes = array(
 	7 => "OPML",
 	8 => "HTML",
 	9 => "JS",
-);
+];
 $gBitSmarty->assign( "feedTypes", $feedTypes );
 
 if( !empty( $_REQUEST['feed_settings'] ) ) {
@@ -100,4 +102,3 @@ if( !empty( $_REQUEST['feed_settings'] ) ) {
 		simple_set_toggle( $item, RSS_PKG_NAME );
 	}
 }
-?>

@@ -1,10 +1,16 @@
 <?php
+
+namespace Bitweaver\Liberty;
+use Bitweaver\KernelTools;
+use Bitweaver\Rss\RSSLib;
+
 /**
  * @version  $Revision$
  * @package  liberty
  * @subpackage plugins_data
  */
-// +----------------------------------------------------------------------+
+
+ // +----------------------------------------------------------------------+
 // | Copyright (c) 2004, bitweaver.org
 // +----------------------------------------------------------------------+
 // | All Rights Reserved. See below for details and a complete list of authors.
@@ -25,20 +31,20 @@
 global $gLibertySystem;
 define( 'PLUGIN_GUID_DATARSS', 'datarss' );
 global $gLibertySystem;
-$pluginParams = array (
+$pluginParams = [
 	'tag'           => 'rss',
-	'auto_activate' => FALSE,
-	'requires_pair' => FALSE,
+	'auto_activate' => false,
+	'requires_pair' => false,
 	'load_function' => 'rss_parse_data',
 	'title'         => 'RSS Feed',
 	'help_page'     => 'DataPluginRSS',
-	'description'   => tra("Display RSS Feeds"),
+	'description'   => KernelTools::tra("Display RSS Feeds"),
 	'help_function' => 'rss_extended_help',
 	'syntax'        => "{RSS id= max= }",
 	'plugin_type'   => DATA_PLUGIN,
 	'biticon'       => '{biticon ilocation=quicktag ipackage=rss iname=rss-16x16 iexplain="RSS Feed"}',
 	'taginsert'     => '{rss}'
-);
+];
 $gLibertySystem->registerPlugin( PLUGIN_GUID_DATARSS, $pluginParams );
 $gLibertySystem->registerDataTag( $pluginParams['tag'], PLUGIN_GUID_DATARSS );
 
@@ -46,19 +52,19 @@ function rss_extended_help() {
 	$help =
 		'<table class="data help">'
 			.'<tr>'
-				.'<th>' . tra( "Key" ) . '</th>'
-				.'<th>' . tra( "Type" ) . '</th>'
-				.'<th>' . tra( "Comments" ) . '</th>'
+				.'<th>' . KernelTools::tra( "Key" ) . '</th>'
+				.'<th>' . KernelTools::tra( "Type" ) . '</th>'
+				.'<th>' . KernelTools::tra( "Comments" ) . '</th>'
 			.'</tr>'
 			.'<tr class="odd">'
 				.'<td>id</td>'
-				.'<td>' . tra( "string") . '<br />' . tra("(mandatory)") . '</td>'
-				.'<td>' . tra( "IDs of the RSS-feeds to process. Separate multiple ids with \",\"") . '</td>'
+				.'<td>' . KernelTools::tra( "string") . '<br />' . KernelTools::tra("(mandatory)") . '</td>'
+				.'<td>' . KernelTools::tra( "IDs of the RSS-feeds to process. Separate multiple ids with \",\"") . '</td>'
 			.'</tr>'
 			.'<tr class="even">'
 				.'<td>max</td>'
-				.'<td>' . tra( "integer") . '<br />' . tra("(optional)") . '</td>'
-				.'<td>' . tra( "Number of entries to be displayed from given RSS Feed, prefixed with publication date.") . '</td>'
+				.'<td>' . KernelTools::tra( "integer") . '<br />' . KernelTools::tra("(optional)") . '</td>'
+				.'<td>' . KernelTools::tra( "Number of entries to be displayed from given RSS Feed, prefixed with publication date.") . '</td>'
 			.'</tr>'
 		.'</table>'
 	;
@@ -69,15 +75,14 @@ function rss_parse_data( $data, $params ) {
 	$repl = '';
 	if( !empty( $params['id'] ) ) {
 		global $rsslib;
-		require_once( RSS_PKG_PATH.'rss_lib.php' );
 
 		$max = !empty( $params['max'] ) ? $params['max'] : 99;
 		
 		if ( $items = $rsslib->parse_feeds( $params ) ){
 			//if we want short descriptions get them
-			$shortdescs = Array();	
-			if ( !empty($module_params['desc_length']) && is_numeric($module_params['desc_length']) && !empty($items)){
-				$shortdescs = $rsslib->get_short_descs( $items, $module_params['desc_length'] );
+			$shortdescs = [];	
+			if ( !empty($params['desc_length']) && is_numeric($params['desc_length']) && !empty($items)){
+				$shortdescs = $rsslib->get_short_descs( $items, $params['desc_length'] );
 			}
 		}		
 		
@@ -98,5 +103,3 @@ function rss_parse_data( $data, $params ) {
 
 	return $repl;
 }
-
-?>
