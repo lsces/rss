@@ -35,7 +35,7 @@ if( isset( $_REQUEST["view"] ) ) {
 	$feed->handle_content_type();
 
 	$items = $feed->get_items();
-	$gBitSmarty->assignByRef( 'items', $items );
+	$gBitSmarty->assign( 'items', $items );
 }
 
 if( $_REQUEST["rss_id"] ) {
@@ -96,36 +96,24 @@ if (isset($_REQUEST["save"])) {
 	$gBitSmarty->assign('show_pub_date', 'n');
 }
 
-if ( empty( $_REQUEST["sort_mode"] ) ) {
-	$sort_mode = 'name_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
+$sort_mode = ( empty( $_REQUEST["sort_mode"] ) ) ? 'name_desc' : $_REQUEST["sort_mode"];
 
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-if (isset($_REQUEST['page'])) {
+$offset = ( !isset( $_REQUEST["offset"] ) ) ? 0 : $_REQUEST["offset"];
+if (isset( $_REQUEST['page'] )) {
 	$page = &$_REQUEST['page'];
-	$offset = ($page - 1) * $max_records;
+	$offset = ( $page - 1 ) * $max_records;
 }
-$gBitSmarty->assignByRef('offset', $offset);
+$gBitSmarty->assign( 'offset', $offset );
 
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
+$find = ( isset( $_REQUEST["find"] ) ) ? $_REQUEST["find"] : '';
 
-$gBitSmarty->assign('find', $find);
+$gBitSmarty->assign( 'find', $find );
 
-$gBitSmarty->assignByRef('sort_mode', $sort_mode);
+$gBitSmarty->assign('sort_mode', $sort_mode);
 $channels = $rsslib->list_rss_modules($offset, $max_records, $sort_mode, $find);
 
 $cant_pages = ceil($channels["cant"] / $max_records);
-$gBitSmarty->assignByRef('cant_pages', $cant_pages);
+$gBitSmarty->assign('cant_pages', $cant_pages);
 $gBitSmarty->assign('actual_page', 1 + ($offset / $max_records));
 
 if ($channels["cant"] > ($offset + $max_records)) {
@@ -141,11 +129,9 @@ if ($offset > 0) {
 	$gBitSmarty->assign('prev_offset', -1);
 }
 
-$gBitSmarty->assignByRef('channels', $channels["data"]);
+$gBitSmarty->assign('channels', $channels["data"]);
 
 
 // Display the template
 $gBitSystem->display( 'bitpackage:rss/admin_rssmodules.tpl', NULL, array( 'display_mode' => 'admin' ));
-
-?>
 
