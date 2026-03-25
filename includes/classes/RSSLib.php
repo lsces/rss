@@ -303,7 +303,7 @@ class RSSLib extends BitBase {
 					//$repl = '<b>rss can not be found, id must be a number</b>';
 				}
 			}
-			$feed = new SimplePie();
+			$feed = new \SimplePie();
 			 
 			//Instead of only passing in one feed url, we'll pass in an array of multiple feeds
 			$feed->set_feed_url( $urls );
