@@ -7,7 +7,7 @@
 	<div class="body">
 		{form}
 			{legend legend="Syndication Feeds"}
-				{if $feedlink.url}
+				{if !empty($feedlink.url)}
 					<div id="rssid" class="fade-000000 row">
 						{formlabel label="Requested Feed"}
 						{forminput}

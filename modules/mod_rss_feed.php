@@ -7,27 +7,28 @@
 /**
  * required setup
  */
+use Bitweaver\RSS\RSSLib;
 global $rsslib;
-require_once( RSS_PKG_PATH.'rss_lib.php' );
+$rsslib = new RSSLib;
 
 extract( $moduleParams );
 
-$listHash = Array();
+$listHash = [];
 $listHash['id'] = $module_params['id'];
 $listHash['cache_time'] = !empty($cache_time)?$cache_time:1;
 
 	
 if ( $items = $rsslib->parse_feeds( $listHash ) ){
 
-	$_template->tpl_vars['modRSSItems'] = new Smarty_variable( $items );	
+	$_template->assign( 'modRSSItems', $items );	
 
 	//if we want short descriptions get them
-	$shortdescs = Array();	
+	$shortdescs = [];	
 	if ( !empty($module_params['desc_length']) && is_numeric($module_params['desc_length']) && !empty($items)){
 		$shortdescs = $rsslib->get_short_descs( $items, $module_params['desc_length'] );
 	}
 
-	$_template->tpl_vars['short_desc'] = new Smarty_variable( $shortdescs );	
+	$_template->assign( 'short_desc', $shortdescs );	
 	
 	//if desc is set and no desc_length is given then we present the full description/content of each item
 	$hideDesc = TRUE;
@@ -35,9 +36,8 @@ if ( $items = $rsslib->parse_feeds( $listHash ) ){
 		$hideDesc = FALSE;
 	}
 	
-	$_template->tpl_vars['hideDesc'] = new Smarty_variable( $hideDesc );
+	$_template->assign( 'hideDesc', $hideDesc );
 	
 	$max = !empty( $module_params['max'] ) ? $module_params['max'] : 10;
-	$_template->tpl_vars['max'] = new Smarty_variable( $max );
+	$_template->assign( 'max', $max );
 }
-?>

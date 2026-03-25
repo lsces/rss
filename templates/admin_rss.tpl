@@ -13,7 +13,7 @@
 							{assign var="rss_max"          value="`$pkg_rss`_max_records"}
 							{assign var="rss_title"        value="`$pkg_rss`_title"}
 							{assign var="rss_description"  value="`$pkg_rss`_description"}
-							{formhelp note=$output.note}
+							{formhelp note=$output.note|default:''}
 						{/forminput}
 					</div>
 
@@ -73,7 +73,7 @@
 						{formlabel label=$output.label for=$setting}
 						{forminput}
 							<input type="text" name="{$setting}" id="{$setting}" size="50" value="{$gBitSystem->getConfig($setting)}" />
-							{formhelp note=$output.note}
+							{formhelp note=$output.note|default:''}
 						{/forminput}
 					</div>
 				{/foreach}
@@ -83,7 +83,7 @@
 					{formlabel label=$output.label for=$item}
 					{forminput}
 						{html_checkboxes name="$item" values="y" checked=$gBitSystem->getConfig($item) labels=false id=$item}
-						{formhelp note=$output.note page=$output.page}
+						{formhelp note=$output.note|default:'' page=$output.page|default:''}
 					{/forminput}
 				</div>
 				{/foreach}
