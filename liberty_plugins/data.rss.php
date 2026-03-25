@@ -29,7 +29,6 @@ use function count;
 /**
  * definitions
  */
-global $gLibertySystem;
 define( 'PLUGIN_GUID_DATARSS', 'datarss' );
 global $gLibertySystem;
 $pluginParams = [
