@@ -1,4 +1,6 @@
 <?php
+
+use Bitweaver\KernelTools;
 /**
  * $Header$
  *
@@ -29,7 +31,7 @@ foreach( $gBitSystem->mPackages as $pkg => $pkgInfo ) {
 if ( empty($pkgs) ) { $pkgs['none'] = 'No Feeds Enabled'; }
 $gBitSmarty->assign( "pkgs", $pkgs );
 
-$feedFormat = array(
+$feedFormat = [
 	0 => "RSS 0.91",
 	1 => "RSS 1.0",
 	2 => "RSS 2.0",
@@ -40,7 +42,7 @@ $feedFormat = array(
 	7 => "OPML",
 	8 => "HTML",
 	9 => "JS",
-);
+];
 $gBitSmarty->assign( "feedFormat", $feedFormat );
 
 if( !empty( $_REQUEST['get_feed'] ) ) {
@@ -54,5 +56,4 @@ if( !empty( $_REQUEST['get_feed'] ) ) {
 }
 $gBitSmarty->assign( 'feedlink', $feedlink );
 
-$gBitSystem->display( 'bitpackage:rss/rss.tpl', tra( 'Select Feed' ) , array( 'display_mode' => 'display' ));
-?>
+$gBitSystem->display( 'bitpackage:rss/rss.tpl', KernelTools::tra( 'Select Feed' ) , [ 'display_mode' => 'display' ]);

@@ -1,7 +1,8 @@
 <?php
+use BitInstaller;
 global $gBitInstaller;
 
-$tables = array(
+$tables = [
 	'rss_modules' => "
 		rss_id I4 AUTO PRIMARY,
 		name C(30) NOTNULL,
@@ -14,14 +15,14 @@ $tables = array(
 		content X
 	",
 
-	'rss_feeds' => "
+	'rss_feeds'   => "
 		name C(30) NOTNULL,
 		rss_ver C(1) NOTNULL DEFAULT '1',
 		refresh I4 DEFAULT '300',
 		last_updated I8,
 		rss_cache B
-	"
-);
+	",
+];
 
 foreach( array_keys( $tables ) AS $tableName ) {
 	$gBitInstaller->registerSchemaTable( RSS_PKG_NAME, $tableName, $tables[$tableName] );
@@ -33,7 +34,6 @@ $gBitInstaller->registerPackageInfo( RSS_PKG_NAME, array(
 ) );
 
 // ### Default Preferences
-$gBitInstaller->registerPreferences( RSS_PKG_NAME, array(
-	array( RSS_PKG_NAME, 'rssfeed_cache_time', 3600 ),
-));
-?>
+$gBitInstaller->registerPreferences( RSS_PKG_NAME, [
+	[ RSS_PKG_NAME, 'rssfeed_cache_time', 3600 ],
+]);

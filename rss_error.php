@@ -1,4 +1,7 @@
 <?php
+
+use Bitweaver\RSS\FeedItem;
+use Bitweaver\KernelTools;
 /**
  * @version $Header$
  * @package rss
@@ -10,9 +13,9 @@
  */
 
 $item = new FeedItem();
-$item->title = tra( 'Syndication Problem' );
+$item->title = KernelTools::tra( 'Syndication Problem' );
 $item->link = 'http://'.$_SERVER['HTTP_HOST'].BIT_ROOT_URL;
-$item->description = !empty( $message ) ? $message : tra( "You don't have permission to view this syndication feed." );
+$item->description = !empty( $message ) ? $message : KernelTools::tra( "You don't have permission to view this syndication feed." );
 
 $item->source = 'http://'.$_SERVER['HTTP_HOST'].BIT_ROOT_URL;
 $item->author = $gBitUser->getPreference( 'site_title' );
@@ -26,4 +29,3 @@ $rss->addItem( $item );
 // display the error msg
 echo $rss->saveFeed( $rss_version_name, TEMP_PKG_PATH.'rss/error.xml' );
 die;
-?>

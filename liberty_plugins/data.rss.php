@@ -3,6 +3,7 @@
 namespace Bitweaver\Liberty;
 use Bitweaver\KernelTools;
 use Bitweaver\Rss\RSSLib;
+use function count;
 
 /**
  * @version  $Revision$
