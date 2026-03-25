@@ -8,10 +8,11 @@
 
 // Initialization
 require_once( '../../kernel/includes/setup_inc.php' );
-include_once( RSS_PKG_PATH.'rss_lib.php' );
+
+use Bitweaver\Rss\RSSLib;
 
 if( !isset( $rsslib ) ) {
-	$rsslib = new RssLib();
+	$rsslib = new RSSLib();
 }
 
 $gBitSystem->verifyPermission( 'p_admin' );
