@@ -8,6 +8,7 @@
 /**
  * Initialization
  */
+use Bitweaver\Rss\UniversalFeedCreator;
 use Bitweaver\KernelTools;
 use Bitweaver\Rss\FeedImage;
 use Bitweaver\Users\BaseAuth;
@@ -26,7 +27,7 @@ if( $gBitSystem->getConfig( 'rssfeed_httpauth' ) &&
 }
 
 // initiate feed creator class
-$rss = new \Bitweaver\Rss\UniversalFeedCreator();
+$rss = new UniversalFeedCreator();
 
 $rss->copyright                 = $gBitSystem->getConfig( 'rssfeed_copyright' );
 $rss->editor                    = $gBitSystem->getConfig( 'rssfeed_editor' );
@@ -106,7 +107,7 @@ switch( $version ) {
 if ( isset( $gBitUser->mGroups ) ) {
 	ksort( $gBitUser->mGroups );
 	$cacheFileTail = 'p'.implode( '.', array_keys( $gBitUser->mGroups ) ).'_'.$rss_version_name.'.xml';
-} else {
+} else if ( isset( $gBitUser->mRoles ) ) {
 	ksort( $gBitUser->mRoles );
 	$cacheFileTail = 'p'.implode( '.', array_keys( $gBitUser->mRoles ) ).'_'.$rss_version_name.'.xml';
 }

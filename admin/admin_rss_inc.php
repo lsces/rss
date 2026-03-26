@@ -86,9 +86,9 @@ if( !empty( $_REQUEST['feed_settings'] ) ) {
 	foreach( array_keys( $formRSSFeeds ) as $item ) {
 		$package = preg_replace( "/^rss_/", "", $item );
 		simple_set_toggle( $item, $package );
-		simple_set_int( $item.'_max_records', $package );
-		simple_set_value( $item.'_title', $package );
-		simple_set_value( $item.'_description', $package );
+		simple_set_int( "{$item}_max_records", $package );
+		simple_set_value( "{$item}_title", $package );
+		simple_set_value( "{$item}_description", $package );
 	}
 
 	// deal with the RSS settings
