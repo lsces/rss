@@ -276,7 +276,7 @@ class FeedCreator extends HtmlDescribable {
 	 */
 	public function _createAdditionalElements($elements, $indentString="") {
 		$ae = "";
-		if (is_array( $elements )) {
+		if (\is_array( $elements )) {
 			foreach ( $elements as $key => $value ) {
 				$ae .= $indentString . "<$key>$value</$key>\n";
 			}
@@ -415,14 +415,14 @@ class FeedCreator extends HtmlDescribable {
 
 	public function addNamespace($ns,$uri)
 	{
-		$array = array_combine(array($ns),array($uri));
+		$array = array_combine( [ $ns ], [ $uri ] );
 		$this->namespace = array_merge($array,$this->namespace);
 	}
 
 	public function _createNamespace() {
 			$ns = "";
 
-			if (is_array($this->namespace)) {
+			if (\is_array($this->namespace)) {
 				foreach($this->namespace AS $key => $value) {
 					$ns.= " xmlns:$key=\"$value\"";
 				}
@@ -637,12 +637,12 @@ class RSSCreator091 extends FeedCreator {
 		if ($this->skipDays != "") {
 			$feed .= "        <skipDays>" . htmlspecialchars( $this->skipDays ) . "</skipDays>\n";
 		}
-		if (isset( $this->media ) && is_array( $this->media )) {
+		if (isset( $this->media ) && \is_array( $this->media )) {
 			if (isset( $this->media['thumbnail'] )) {
 				$feed .= "        <media:thumbnail url='" . $this->media['thumbnail'] . "'/>\n";
 			}
 		}
-		if (isset( $this->itunes ) && is_array( $this->itunes )) {
+		if (isset( $this->itunes ) && \is_array( $this->itunes )) {
 			if (isset( $this->itunes['thumbnail'] )) {
 				$feed .= "        <itunes:image href='" . $this->itunes['thumbnail'] . "'/>\n";
 			}
