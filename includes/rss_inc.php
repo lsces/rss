@@ -11,7 +11,6 @@
 use Bitweaver\Rss\UniversalFeedCreator;
 use Bitweaver\KernelTools;
 use Bitweaver\Rss\FeedImage;
-use Bitweaver\Users\BaseAuth;
 require_once( USERS_PKG_INCLUDE_PATH."users_lib.php" );
 
 // make sure the feeds cache dir is available

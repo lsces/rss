@@ -42,7 +42,7 @@ if( isset( $_REQUEST["view"] ) ) {
 if( $_REQUEST["rss_id"] ) {
 	$info = $rsslib->get_rss_module( $_REQUEST["rss_id"] );
 } else {
-	$info = array();
+	$info = [];
 
 	$info["name"] = '';
 	$info["description"] = '';
@@ -60,12 +60,11 @@ $gBitSmarty->assign('show_title', $info["show_title"]);
 $gBitSmarty->assign('show_pub_date', $info["show_pub_date"]);
 
 if (isset($_REQUEST["remove"])) {
-	
+
 	$rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
-	
 
 	if (isset($_REQUEST['show_title']) == 'on') {
 		$gBitSmarty->assign('show_title', 'y');
@@ -132,7 +131,6 @@ if ($offset > 0) {
 
 $gBitSmarty->assign('channels', $channels["data"]);
 
-
 // Display the template
-$gBitSystem->display( 'bitpackage:rss/admin_rssmodules.tpl', NULL, array( 'display_mode' => 'admin' ));
+$gBitSystem->display( 'bitpackage:rss/admin_rssmodules.tpl', NULL, [ 'display_mode' => 'admin' ]);
 

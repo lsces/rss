@@ -59,12 +59,12 @@ class FeedHtmlField {
 		// Remove Bootstrap wrapper divs
 		$html = preg_replace( '/<div[^>]*class="(container|row|col-[^"]*)"[^>]*>/', '', $html );
 		$html = preg_replace( '/<\/div>/', '', $html );
-		
+
 		// Keep formatting, images, links; strip everything else
 		return preg_replace(
-			'/\s+/', 
-			' ', 
-			strip_tags( $html, '<p><br><img><strong><em><a><blockquote><ul><ol><li>' )
+			'/\s+/',
+			' ',
+			strip_tags( $html, '<p><br><img><strong><em><a><blockquote><ul><ol><li>' ),
 		);
 	}
 }

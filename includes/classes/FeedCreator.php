@@ -138,7 +138,6 @@ class FeedCreator extends HtmlDescribable {
 	 */
 	public $title, $description, $link;
 
-
 	/**
 	 * Optional attributes of a feed.
 	 */
@@ -156,12 +155,10 @@ class FeedCreator extends HtmlDescribable {
 		*/
 	public $cssStyleSheet = '';
 
-
 	/**
 	 * @access private
 	 */
 	public $items = [];
-
 
 	/**
 	 * This feed's MIME content type.
@@ -169,7 +166,6 @@ class FeedCreator extends HtmlDescribable {
 	 * @access private
 	 */
 	public $contentType = "application/xml";
-
 
 	/**
 	 * This feed's character encoding.
@@ -186,7 +182,6 @@ class FeedCreator extends HtmlDescribable {
 
 	 public $generator = "support@rdmcloud.uk";
 
-
 	/**
 	 * Any additional elements to include as an assiciated array. All $key => $value pairs
 	 * will be included unencoded in the feed in the form
@@ -196,7 +191,6 @@ class FeedCreator extends HtmlDescribable {
 	 * the FeedCreator class used.
 	 */
 	public $additionalElements = [];
-
 
 	/**
 	 * Adds an FeedItem to the feed.
@@ -215,7 +209,7 @@ class FeedCreator extends HtmlDescribable {
 	 **/
 	 function version() {
 
-	 	return FEEDCREATOR_VERSION." (".$this->generator.")";
+		return FEEDCREATOR_VERSION." (".$this->generator.")";
 	 }
 
 	/**
@@ -256,7 +250,6 @@ class FeedCreator extends HtmlDescribable {
 		return substr($string,0,$length-4)." ...";
 
 	}
-
 
 	/**
 	 * Creates a comment indicating the generator of this feed.
@@ -647,7 +640,7 @@ class RSSCreator091 extends FeedCreator {
 				$feed .= "        <itunes:image href='" . $this->itunes['thumbnail'] . "'/>\n";
 			}
 			// itunes expects an explicit setting. we default to no because we're not into this facist crap, but if you need to set it to yes you can.
-			$itunesExplicit = isset( $this->itunes['explicit'] ) ? $this->itunes['explicit'] : "no";
+			$itunesExplicit = $this->itunes['explicit'] ?? "no";
 			$feed .= "        <itunes:explicit>" . $itunesExplicit . "</itunes:explicit>\n";
 		}
 
@@ -665,7 +658,7 @@ class RSSCreator091 extends FeedCreator {
 				if ($this->items[$i]->authorEmail!="") {
 					$feed.= "            <author> " . htmlspecialchars($this->items[$i]->authorEmail) . " (".htmlspecialchars($this->items[$i]->author).")</author>\n";
 				} else {
-				      $feed.= "            <author> no_email@example.com (".htmlspecialchars($this->items[$i]->author).")</author>\n";
+					  $feed.= "            <author> no_email@example.com (".htmlspecialchars($this->items[$i]->author).")</author>\n";
 				}
 			}
 			/*
@@ -691,7 +684,6 @@ class RSSCreator091 extends FeedCreator {
 				$feed .= "            <pubDate>" . htmlspecialchars( $itemDate->rfc822() ) . "</pubDate>\n";
 			}
 
-
 			if ($this->items[$i]->guid!="") {
 				$feed.= "            <guid isPermaLink=\"false\">".htmlspecialchars($this->items[$i]->guid)."</guid>\n";
 			} else {
@@ -712,9 +704,7 @@ class RSSCreator091 extends FeedCreator {
 				$feed.= "\" type=\"";
 				$feed.= $this->items[$i]->enclosure->type;
 				$feed.= "\"/>\n";
-		        }
-
-
+				}
 
 			$feed.= "        </item>\n";
 		}
@@ -735,9 +725,9 @@ class RSSCreator091 extends FeedCreator {
  */
 class RSSCreator20 extends RSSCreator091 {
 
-    function RSSCreator20() {
-        parent::_setRSSVersion("2.0");
-    }
+	function RSSCreator20() {
+		parent::_setRSSVersion("2.0");
+	}
 
 }
 
@@ -840,14 +830,12 @@ class PIECreator01 extends FeedCreator {
 		}
 		if ($this->category!="") {
 
-
 					$feed.= "    <category term=\"" . htmlspecialchars($this->category) . "\" />\n";
 		}
 		if ($this->copyright!="") {
 					$feed.= "    <rights>".FeedCreator::iTrunc(htmlspecialchars($this->copyright),100)."</rights>\n";
 		}
 		$feed.= "    <generator>".$this->version()."</generator>\n";
-
 
 		$feed.= "    <link rel=\"self\" type=\"application/atom+xml\" href=\"". htmlspecialchars($this->syndicationURL). "\" />\n";
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
@@ -861,7 +849,6 @@ class PIECreator01 extends FeedCreator {
 			$itemDate = new FeedDate($this->items[$i]->date);
 			$feed.= "        <published>".htmlspecialchars($itemDate->iso8601())."</published>\n";
 			$feed.= "        <updated>".htmlspecialchars($itemDate->iso8601())."</updated>\n";
-
 
 			$tempguid = $this->items[$i]->link;
 			if ($this->items[$i]->guid!="") {
@@ -896,13 +883,11 @@ class PIECreator01 extends FeedCreator {
 
 			if ($this->items[$i]->description!="") {
 
-
 			/*
 			 * ATOM should have at least summary tag, however this implementation may be inaccurate
 			 */
-			 	$tempdesc = $this->items[$i]->getDescription();
-			 	$temptype="";
-
+				$tempdesc = $this->items[$i]->getDescription();
+				$temptype="";
 
 				if ($this->items[$i]->descriptionHtmlSyndicated){
 					$temptype=" type=\"html\"";
@@ -913,7 +898,6 @@ class PIECreator01 extends FeedCreator {
 				if (empty($this->items[$i]->descriptionTruncSize)) {
 					$feed.= "        <content". $temptype . ">". $tempdesc ."</content>\n";
 				}
-
 
 				$feed.= "        <summary". $temptype . ">". $tempdesc ."</summary>\n";
 			} else {
@@ -935,15 +919,12 @@ class PIECreator01 extends FeedCreator {
 
 				$feed .=" /> \n";
 
-
-
 			}
 			$feed.= "    </entry>\n";
 		}
 		$feed.= "</feed>\n";
 		return $feed;
 	}
-
 
 }
 

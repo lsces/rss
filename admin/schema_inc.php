@@ -1,5 +1,4 @@
 <?php
-use BitInstaller;
 global $gBitInstaller;
 
 $tables = [
@@ -28,10 +27,10 @@ foreach( array_keys( $tables ) AS $tableName ) {
 	$gBitInstaller->registerSchemaTable( RSS_PKG_NAME, $tableName, $tables[$tableName] );
 }
 
-$gBitInstaller->registerPackageInfo( RSS_PKG_NAME, array(
+$gBitInstaller->registerPackageInfo( RSS_PKG_NAME, [
 	'description' => "Resource Description Framework (RDF) Site Summary (RSS) is a lightweight multipurpose extensible metadata description and syndication format. It allows users to read healines from your site with a dedicated RSS reader.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-) );
+] );
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( RSS_PKG_NAME, [

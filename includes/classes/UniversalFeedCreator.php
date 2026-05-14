@@ -56,7 +56,6 @@ class UniversalFeedCreator extends FeedCreator {
 				$this->_feed = new AtomCreator10();
 				break;
 
-
 			case "ATOM0.3":
 				$this->_feed = new AtomCreator03();
 				break;
@@ -98,8 +97,6 @@ class UniversalFeedCreator extends FeedCreator {
 		return $this->_feed->createFeed();
 	}
 
-
-
 	/**
 	 * Saves this feed as a file on the local disk. After the file is saved, an HTTP redirect
 	 * header may be sent to redirect the use to the newly created file.
@@ -115,30 +112,28 @@ class UniversalFeedCreator extends FeedCreator {
 		$this->_feed->saveFeed($filename, $displayContents);
 	}
 
-
    /**
-    * Turns on caching and checks if there is a recent version of this feed in the cache.
-    * If there is, an HTTP redirect header is sent.
-    * To effectively use caching, you should create the FeedCreator object and call this method
-    * before anything else, especially before you do the time consuming task to build the feed
-    * (web fetching, for example).
-    *
-    * @param string   format   format the feed should comply to. Valid values are:
-    *       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
-    * @param string filename optional the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["SCRIPT_NAME"] with the extension changed to .xml (see _generateFilename()).
-    * @param int timeout optional the timeout in seconds before a cached version is refreshed (defaults to 3600 = 1 hour)
-    */
+	* Turns on caching and checks if there is a recent version of this feed in the cache.
+	* If there is, an HTTP redirect header is sent.
+	* To effectively use caching, you should create the FeedCreator object and call this method
+	* before anything else, especially before you do the time consuming task to build the feed
+	* (web fetching, for example).
+	*
+	* @param string   format   format the feed should comply to. Valid values are:
+	*       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
+	* @param string filename optional the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["SCRIPT_NAME"] with the extension changed to .xml (see _generateFilename()).
+	* @param int timeout optional the timeout in seconds before a cached version is refreshed (defaults to 3600 = 1 hour)
+	*/
    function useCached($format="RSS0.91", $filename="", $timeout=3600) {
-      $this->_setFormat($format);
-      $this->_feed->useCached($filename, $timeout);
+	  $this->_setFormat($format);
+	  $this->_feed->useCached($filename, $timeout);
    }
-
 
    /**
 	* Outputs feed to the browser - needed for on-the-fly feed generation (like it is done in WordPress, etc.)
 	*
 	* @param	string	format the feed should comply to. Valid values are:
-    * 							"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
+	* 							"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
 	*/
    function outputFeed($format='RSS0.91') {
 		$this->_setFormat($format);

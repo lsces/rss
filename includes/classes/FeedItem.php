@@ -88,7 +88,6 @@ class EnclosureItem extends HtmlDescribable {
 
 }
 
-
 /**
  * @package rss
  * An FeedImage may be added to a FeedCreator feed.

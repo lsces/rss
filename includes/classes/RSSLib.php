@@ -1,5 +1,6 @@
 <?php
 namespace Bitweaver\Rss;
+
 use Bitweaver\BitBase;
 use Bitweaver\KernelTools;
 /**
@@ -57,7 +58,7 @@ class RSSLib extends BitBase {
 		if( is_numeric( $rss_id ) ) {
 			//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 			$refresh = 60 * $refresh;
-	
+
 			if ($rss_id) {
 				$query = "update `".BIT_DB_PREFIX."rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=?,`show_title`=?,`show_pub_date`=? where `rss_id`=?";
 				$bindvars= [ $name, $description, $refresh, $url, $show_title, $show_pub_date, $rss_id ];
@@ -67,7 +68,7 @@ class RSSLib extends BitBase {
 					values(?,?,?,?,?,?,?,?)";
 				$bindvars= [ $name, $description, $url, $refresh, '', 1000000, $show_title, $show_pub_date ];
 			}
-	
+
 			$result = $this->mDb->query($query,$bindvars);
 			$ret = true;
 		}
@@ -78,8 +79,8 @@ class RSSLib extends BitBase {
 		$ret = FALSE;
 		if( is_numeric( $rss_id ) ) {
 			$query = "delete from `".BIT_DB_PREFIX."rss_modules` where `rss_id`=?";
-	
-			$result = $this->mDb->query($query,array($rss_id));
+
+			$result = $this->mDb->query($query,[$rss_id]);
 			$ret = true;
 		}
 		return $ret;
@@ -89,12 +90,12 @@ class RSSLib extends BitBase {
 		$ret = FALSE;
 		if( is_numeric( $rss_id ) ) {
 			$query = "select * from `".BIT_DB_PREFIX."rss_modules` where `rss_id`=?";
-	
-			$result = $this->mDb->query($query,array($rss_id));
-	
+
+			$result = $this->mDb->query($query,[$rss_id]);
+
 			if (!$result->numRows())
 				return false;
-	
+
 			$ret = $result->fetchRow();
 		}
 		return $ret;
@@ -134,24 +135,24 @@ class RSSLib extends BitBase {
 			$data = $this->rss_iconv( KernelTools::bit_http_request($info['url']));
 			$now = $gBitSystem->getUTCTime();
 			$query = "update `".BIT_DB_PREFIX."rss_modules` set `content`=?, `last_updated`=? where `rss_id`=?";
-			$result = $this->mDb->query($query,array((string)$data,(int) $now, (int) $rss_id));
+			$result = $this->mDb->query($query,[(string)$data,(int) $now, (int) $rss_id]);
 			return $data;
-		} else {
-			return false;
 		}
+			return false;
+
 	}
 
 	public function rss_module_name_exists($name) {
 		$query = "select `name` from `".BIT_DB_PREFIX."rss_modules` where `name`=?";
 
-		$result = $this->mDb->query($query,array($name));
+		$result = $this->mDb->query($query,[$name]);
 		return $result->numRows();
 	}
 
 	public function get_rss_module_id($name) {
 		$query = "select `rss_id` from `".BIT_DB_PREFIX."rss_modules` where `name`=?";
 
-		$id = $this->mDb->getOne($query,array($name));
+		$id = $this->mDb->getOne($query,[$name]);
 		return $id;
 	}
 
@@ -159,8 +160,8 @@ class RSSLib extends BitBase {
 		$ret = FALSE;
 		if( is_numeric( $rss_id ) ) {
 			$query = "select `show_title` from `".BIT_DB_PREFIX."rss_modules` where `rss_id`=?";
-	
-			$ret = $this->mDb->getOne($query,array($rss_id));
+
+			$ret = $this->mDb->getOne($query,[$rss_id]);
 		}
 		return $ret;
 	}
@@ -169,8 +170,8 @@ class RSSLib extends BitBase {
 		$ret = FALSE;
 		if( is_numeric( $rss_id ) ) {
 			$query = "select `show_pub_date` from `".BIT_DB_PREFIX."rss_modules` where `rss_id`=?";
-	
-			$show_pub_date = $this->mDb->getOne($query,array($rss_id));
+
+			$show_pub_date = $this->mDb->getOne($query,[$rss_id]);
 			$ret = $show_pub_date;
 		}
 		return $ret;
@@ -200,11 +201,11 @@ class RSSLib extends BitBase {
 
 					if ($new_xmlstr === FALSE) {
 						// in_encod -> out_encod not supported, may be misspelled encoding
-						$sencod = strtr($sencod, array(
+						$sencod = strtr($sencod, [
 							"-" => "",
 							"_" => "",
-							" " => ""
-						));
+							" " => "",
+						]);
 
 						$new_xmlstr = @iconv($sencod, $tencod, $xmlstr);
 
@@ -222,10 +223,10 @@ class RSSLib extends BitBase {
 				} elseif (function_exists('recode_string')) {
 					// I don't have recode support could somebody test it?
 					$xmlstr = @recode_string("$sencod..$tencod", $xmlstr);
-				} else {
+				}
 				// This PHP intallation don't have any EncodConvFunc...
 				// somebody could create bit_iconv(...)?
-				}
+
 			}
 
 			// Replace header, put the new encoding
@@ -234,98 +235,98 @@ class RSSLib extends BitBase {
 
 		return $xmlstr;
 	}
-	
+
 	public function get_short_desc( $text ){
 		// first we can remove unwanted stuff like images and lists or whatever - this is rough
-		$pattern = array(
+		$pattern = [
 			"!<img[^>]*>!is",
 			//"!<ul.*?</ul>!is",
-		);
+		];
 		$text = preg_replace( $pattern, "", $text );
-		
-		$text = substr($text, 0, 1000);		
-		
+
+		$text = substr($text, 0, 1000);
+
 		// now we strip remaining tags and xs whitespace
 		$text = trim( preg_replace( "!\s+!s", " ", strip_tags( $text )));
-		
+
 		// finally we try to extract sentences as well as we can
 		// to add more characters to split sentences by add them after the last \? - you might want to add : or ;
 		preg_match_all( "#([\.!\?\s\)]*)(.*?[a-zA-Z][2]\s*[\.\!\?]+\)?)#s", $text, $matches );
-		
+
 		return $matches[2];
 	}
-	
+
 	public function get_short_descs( $items, $length=1 ){
-		$shortdescs = Array();
-		
+		$shortdescs = [];
+
 		if ( !empty($items) ){
 			foreach ($items as $item){
 				//we try to trim each story to given number of sentences
 				$sentences = $this->get_short_desc( $item->get_description() );
-				
+
 				$shortdesc = NULL;
 				for ($n = 0; $n < $length; $n++){
 					$space = ($n > 0)?" ":NULL;
 					$shortdesc .= $space;
 					$shortdesc .= ( !empty( $sentences[$n] ) && $sentences[$n] != NULL ) ? $sentences[$n] : NULL;
 				}
-				
+
 				$shortdescs[] = $shortdesc;
 			}
 		}
-		
+
 		return $shortdescs;
 	}
 
 	public function parse_feeds( $pParamHash ){
 		//set path to rss feed cache
 		$cache_path = TEMP_PKG_PATH.'rss/simplepie';
-		
+
 		//we do this earlier instead of later because if we can't cache the source we shouldn't be pulling the rss feed.
 		if( !is_dir( $cache_path ) && !KernelTools::mkdir_p( $cache_path ) ) {
 			\Bitweaver\bit_error_log( 'Can not create the cache directory: '.$cache_path );
-			
+
 			return FALSE;
-		}else{
+		}
 			//load up parser SimplePie
 			require_once( UTIL_PKG_INCLUDE_PATH.'simplepie/simplepie.php' );
 
 			$ids = ( !is_array( $pParamHash['id'] ) ) ? explode( ",", $pParamHash['id'] ) : $pParamHash['id'];
-			
+
 			$urls = [];
-			
+
 			foreach ($ids as $id){
 				if( @BitBase::verifyId( $id ) ) {
 					$feedHash = $this->get_rss_module( $id );
 					$urls[] = $feedHash['url'];
-				}else{
+				}
 					//todo assign this as an error
 					//$repl = '<b>rss can not be found, id must be a number</b>';
-				}
+
 			}
 			$feed = new \SimplePie();
-			 
+
 			//Instead of only passing in one feed url, we'll pass in an array of multiple feeds
 			$feed->set_feed_url( $urls );
-			
+
 			$feed->set_cache_location( $cache_path );
-			
+
 			//set cache time
 			$cache_time = !empty($pParamHash['cache_time'])?$pParamHash['cache_time']:1;
 			$feed->set_cache_duration( $cache_time );
-			
+
 			//not sure - we may want to eventually use this
 			//$feed->set_stupidly_fast(TRUE);
-			 
+
 			// Initialize the feed object
 			$feed->init();
-			 
+
 			// This will work if all of the feeds accept the same settings.
 			$feed->handle_content_type();
-			
+
 			$items = $feed->get_items();
-			
+
 			return $items;
-		}
-	}	
+
+	}
 }

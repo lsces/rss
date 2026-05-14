@@ -1,8 +1,8 @@
 <?php
 
 namespace Bitweaver\Liberty;
+
 use Bitweaver\KernelTools;
-use Bitweaver\Rss\RSSLib;
 use function count;
 
 /**
@@ -43,7 +43,7 @@ $pluginParams = [
 	'syntax'        => "{RSS id= max= }",
 	'plugin_type'   => DATA_PLUGIN,
 	'biticon'       => '{biticon ilocation=quicktag ipackage=rss iname=rss-16x16 iexplain="RSS Feed"}',
-	'taginsert'     => '{rss}'
+	'taginsert'     => '{rss}',
 ];
 $gLibertySystem->registerPlugin( PLUGIN_GUID_DATARSS, $pluginParams );
 $gLibertySystem->registerDataTag( $pluginParams['tag'], PLUGIN_GUID_DATARSS );
@@ -77,15 +77,15 @@ function rss_parse_data( $data, $params ) {
 		global $rsslib;
 
 		$max = !empty( $params['max'] ) ? $params['max'] : 99;
-		
+
 		if ( $items = $rsslib->parse_feeds( $params ) ){
 			//if we want short descriptions get them
-			$shortdescs = [];	
+			$shortdescs = [];
 			if ( !empty($params['desc_length']) && is_numeric($params['desc_length']) && !empty($items)){
 				$shortdescs = $rsslib->get_short_descs( $items, $params['desc_length'] );
 			}
-		}		
-		
+		}
+
 		$repl = '<ul class="rsslist">';
 
 		for ($j = 0; $j < count($items) && $j < $max; $j++) {
