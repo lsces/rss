@@ -28,7 +28,7 @@ if( isset( $_REQUEST["view"] ) ) {
 	$url = $feedHash['url'];
 
 	//load up SimplePie
-	require_once( UTIL_PKG_INCLUDE_PATH.'simplepie/simplepie.php' );
+	require_once( EXTERNAL_LIBS_PATH.'simplepie/simplepie.php' );
 	$feed = new \SimplePie();
 	$feed->set_feed_url( $url );
 	$feed->enable_cache( FALSE ); //we don't cache these previews since in theory we want to confirm that we are getting the feed ok
