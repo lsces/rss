@@ -103,10 +103,7 @@ switch( $version ) {
 		break;
 }
 
-if ( isset( $gBitUser->mGroups ) ) {
-	ksort( $gBitUser->mGroups );
-	$cacheFileTail = 'p'.implode( '.', array_keys( $gBitUser->mGroups ) ).'_'.$rss_version_name.'.xml';
-} else if ( isset( $gBitUser->mRoles ) ) {
+if ( isset( $gBitUser->mRoles ) ) {
 	ksort( $gBitUser->mRoles );
 	$cacheFileTail = 'p'.implode( '.', array_keys( $gBitUser->mRoles ) ).'_'.$rss_version_name.'.xml';
 }
