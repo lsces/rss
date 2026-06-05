@@ -125,7 +125,7 @@
 				</td>
 				<td>
 				   <a href="{$smarty.const.RSS_PKG_URL}admin/admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rss_id}">{biticon ipackage="icons" iname="folder-open"  ipackage="icons"  iexplain=view}</a>
-				   <a href="{$smarty.const.RSS_PKG_URL}admin/admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rss_id={$channels[user].rss_id}">{biticon ipackage="icons" iname="document-properties" ipackage="icons" iexplain=edit}</a>
+				   <a href="{$smarty.const.RSS_PKG_URL}admin/admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rss_id={$channels[user].rss_id}">{biticon ipackage="icons" iname="edit" ipackage="icons" iexplain=edit}</a>
 				   <a href="{$smarty.const.RSS_PKG_URL}admin/admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rss_id}">{biticon ipackage="icons" iname="user-trash" ipackage="icons" iexplain=remove}</a>
 				</td>
 			</tr>
