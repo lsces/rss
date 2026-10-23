@@ -535,7 +535,7 @@ class RSSCreator091 extends FeedCreator {
 		parent::addNamespace($ns,$uri);
 	}
 
-	public function RSSCreator091() {
+	public function __construct() {
 		$this->_setRSSVersion("0.91");
 		$this->contentType = "application/rss+xml";
 	}
@@ -725,8 +725,9 @@ class RSSCreator091 extends FeedCreator {
  */
 class RSSCreator20 extends RSSCreator091 {
 
-	function RSSCreator20() {
-		parent::_setRSSVersion("2.0");
+	public function __construct() {
+		parent::__construct();
+		$this->_setRSSVersion("2.0");
 	}
 
 }
@@ -742,7 +743,7 @@ class RSSCreator20 extends RSSCreator091 {
  */
 class PIECreator01 extends FeedCreator {
 
-	public function PIECreator01() {
+	public function __construct() {
 		$this->encoding = "utf-8";
 	}
 
@@ -799,7 +800,7 @@ class PIECreator01 extends FeedCreator {
  */
  class AtomCreator10 extends FeedCreator {
 
-	public function AtomCreator10() {
+	public function __construct() {
 		$this->contentType = "application/atom+xml";
 		$this->encoding = "utf-8";
 
@@ -947,7 +948,7 @@ class PIECreator01 extends FeedCreator {
  */
 class AtomCreator03 extends FeedCreator {
 
-	public function AtomCreator03() {
+	public function __construct() {
 		$this->contentType = "application/atom+xml";
 		$this->encoding = "utf-8";
 	}
@@ -1017,7 +1018,7 @@ class AtomCreator03 extends FeedCreator {
  */
 class MBOXCreator extends FeedCreator {
 
-	public function MBOXCreator() {
+	public function __construct() {
 		$this->contentType = "text/plain";
 		$this->encoding = "ISO-8859-15";
 	}
@@ -1100,7 +1101,7 @@ class MBOXCreator extends FeedCreator {
  */
 class OPMLCreator extends FeedCreator {
 
-	public function OPMLCreator() {
+	public function __construct() {
 		$this->encoding = "utf-8";
 	}
 
