@@ -54,8 +54,10 @@ if( $gBitSystem->isFeatureActive( 'rssfeed_image_url' ) ) {
 }
 
 // here we work out what type of feed were going to feed
-$version = ( empty( $_REQUEST['version'] ) ) ? $gBitSystem->getConfig( "rssfeed_default_version", "RSS0.91" ) : $_REQUEST['version'];
+$version = ( empty( $_REQUEST['version'] ) ) ? $gBitSystem->getConfig( "rssfeed_default_version", "RSS2.0" ) : $_REQUEST['version'];
 
+// the admin page stores names like "RSS 2.0"; accept those as well as the short codes below
+$version = str_replace( ' ', '', $version );
 $rss_version_name = $version;
 switch( $version ) {
 	case "0":
@@ -99,7 +101,7 @@ switch( $version ) {
 		$rss_version_name = "JS";
 		break;
 	default:
-		$rss_version_name = "RSS0.91";
+		$rss_version_name = in_array( strtoupper( $version ), [ "RSS0.91", "RSS1.0", "RSS2.0", "PIE0.1", "MBOX", "ATOM", "ATOM0.3", "OPML", "HTML", "JS" ] ) ? strtoupper( $version ) : "RSS2.0";
 		break;
 }
 
